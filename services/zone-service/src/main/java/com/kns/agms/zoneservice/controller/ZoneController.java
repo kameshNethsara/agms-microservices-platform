@@ -1,61 +1,46 @@
 package com.kns.agms.zoneservice.controller;
 
-
-
+import com.kns.agms.zoneservice.dto.ZoneRequest;
 import com.kns.agms.zoneservice.entity.Zone;
-import com.kns.agms.zoneservice.repository.ZoneRepository;
+import com.kns.agms.zoneservice.service.ZoneService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/api/v1/zones")
+@RequestMapping("/api/zones")
+@RequiredArgsConstructor
 
 public class ZoneController {
-    private final ZoneRepository zoneRepository;
 
-    public ZoneController(ZoneRepository zoneRepository) {
-        this.zoneRepository = zoneRepository;
-    }
+    private final ZoneService service;
 
-    // Create Zone
     @PostMapping
-    public Zone createZone(@RequestBody Zone zone) {
-        return zoneRepository.save(zone);
+    public ResponseEntity<Zone> createZone(
+            @RequestBody ZoneRequest request,
+            @RequestHeader("Authorization") String token) {
+
+        token = token.replace("Bearer ", "");
+
+        return ResponseEntity.ok(service.createZone(request, token));
     }
 
-    // Get All Zones
-    @GetMapping
-    public List<Zone> getAllZones() {
-        return zoneRepository.findAll();
-    }
-
-    // Get Zone By ID
     @GetMapping("/{id}")
-    public Zone getZoneById(@PathVariable Long id) {
-        return zoneRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Zone not found"));
+    public ResponseEntity<Zone> getZone(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getZone(id));
     }
 
-    // Update Zone
     @PutMapping("/{id}")
-    public Zone updateZone(@PathVariable Long id, @RequestBody Zone updatedZone) {
-        Zone zone = zoneRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Zone not found"));
+    public ResponseEntity<Zone> updateZone(
+            @PathVariable Long id,
+            @RequestBody ZoneRequest request) {
 
-        zone.setName(updatedZone.getName());
-        zone.setMinTemperature(updatedZone.getMinTemperature());
-        zone.setMaxTemperature(updatedZone.getMaxTemperature());
-        zone.setMinHumidity(updatedZone.getMinHumidity());
-        zone.setMaxHumidity(updatedZone.getMaxHumidity());
-
-        return zoneRepository.save(zone);
+        return ResponseEntity.ok(service.updateZone(id, request));
     }
 
-    // Delete Zone
     @DeleteMapping("/{id}")
-    public String deleteZone(@PathVariable Long id) {
-        zoneRepository.deleteById(id);
-        return "Zone deleted successfully";
+    public ResponseEntity<Void> deleteZone(@PathVariable Long id) {
+        service.deleteZone(id);
+        return ResponseEntity.noContent().build();
     }
 }
