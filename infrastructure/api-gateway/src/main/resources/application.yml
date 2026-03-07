@@ -2,8 +2,10 @@ spring:
   application:
     name: api-gateway
 
-config:
-  import: optional:config-server:http://localhost:8888
+#config:
+#  import: optional:config-server:http://localhost:8888
+  config:
+    import: "configserver:http://localhost:8888"
 
 
 #  cloud:
