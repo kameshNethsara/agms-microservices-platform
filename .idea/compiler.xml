@@ -8,9 +8,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="api-gateway" />
+        <module name="config-server" />
         <module name="discovery-server" />
       </profile>
-      <profile name="Annotation profile for zone-service" enabled="true">
+      <profile name="Annotation profile for crop-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -28,6 +29,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="api-gateway" options="-parameters" />
       <module name="automation-service" options="-parameters" />
+      <module name="config-server" options="-parameters" />
       <module name="crop-service" options="-parameters" />
       <module name="discovery-server" options="-parameters" />
       <module name="sensor-service" options="-parameters" />
