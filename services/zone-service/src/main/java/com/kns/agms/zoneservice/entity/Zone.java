@@ -22,4 +22,6 @@ public class Zone {
 
     private Double minHumidity;
     private Double maxHumidity;
+
+    private String deviceId;
 }
