@@ -1,4 +1,4 @@
-package com.kns.agms.configserver;
+package com.kns.configserver;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

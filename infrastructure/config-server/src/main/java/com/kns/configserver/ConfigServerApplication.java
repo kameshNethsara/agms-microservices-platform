@@ -1,4 +1,4 @@
-package com.kns.agms.configserver;
+package com.kns.configserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

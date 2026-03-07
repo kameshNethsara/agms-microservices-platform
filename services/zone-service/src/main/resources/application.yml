@@ -1,0 +1,62 @@
+spring:
+  application:
+    name: zone-service
+
+  config:
+    import: optional:configserver:http://localhost:8888
+
+  # ===============================
+  # Database Configuration (PostgreSQL)
+  # ===============================
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/agms_zone_db
+#    username: postgres
+#    password: '1234'
+#    driver-class-name: org.postgresql.Driver
+
+  # ===============================
+  # JPA / Hibernate
+  # ===============================
+#  jpa:
+#    database-platform: org.hibernate.dialect.PostgreSQLDialect
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        format_sql: true
+
+# ===============================
+# Server Port
+# ===============================
+#server:
+#  port: 8081
+
+# ===============================
+# Eureka Client Configuration
+# ===============================
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka/
+#  instance:
+#    prefer-ip-address: true
+
+# ===============================
+# JWT CONFIGURATION
+# ===============================
+#jwt:
+#  secret: bXktc3VwZXItc2VjdXJlLWtleS1mb3ItcHJvZHVjdGlvbg==
+#  expiration: 86400000
+
+# ===============================
+# Commented MySQL Configuration (Reference)
+# ===============================
+# spring:
+#   datasource:
+#     url: jdbc:mysql://localhost:3306/zone_db?createDatabaseIfNotExist=true
+#     username: root
+#     password: "@317Kns20020317"
+#     driver-class-name: com.mysql.cj.jdbc.Driver
+#   jpa:
+#     database-platform: org.hibernate.dialect.MySQL8Dialect
