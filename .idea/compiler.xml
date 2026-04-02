@@ -18,12 +18,14 @@
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
         </processorPath>
-        <module name="automation-service" />
-        <module name="crop-service" />
-        <module name="sensor-service" />
         <module name="zone-service" />
+        <module name="crop-service" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="automation-service" target="21" />
+      <module name="sensor-service" target="21" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
