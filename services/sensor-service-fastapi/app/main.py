@@ -1,11 +1,35 @@
+import uvicorn
 from fastapi import FastAPI
+from contextlib import asynccontextmanager
+from apscheduler.schedulers.asyncio import AsyncIOScheduler # Async version eka
+import py_eureka_client.eureka_client as eureka_client
 from app.routes.sensor_routes import router as sensor_router
-import os
-from dotenv import load_dotenv
+from app.services.sensor_service import fetch_external_telemetry
 
-load_dotenv()
+PORT = 8082
 
-PORT = int(os.getenv("PORT", 5001))
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Eureka registration
+    try:
+        await eureka_client.init_async(
+            eureka_server="http://localhost:8761/eureka",
+            app_name="sensor-service",
+            instance_port=PORT
+        )
+    except Exception as e:
+        print(f"Eureka connect une na: {e}")
 
-app = FastAPI(title="Sensor Service", version="1.0")
-app.include_router(sensor_router, prefix="/sensor")
+    # Async Scheduler eka use karanna (asyncio.run epa)
+    scheduler = AsyncIOScheduler()
+    scheduler.add_job(fetch_external_telemetry, 'interval', seconds=10)
+    scheduler.start()
+
+    yield
+    scheduler.shutdown()
+
+app = FastAPI(title="Sensor Telemetry Service", lifespan=lifespan)
+app.include_router(sensor_router, prefix="/api/sensors")
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="127.0.0.1", port=PORT)
